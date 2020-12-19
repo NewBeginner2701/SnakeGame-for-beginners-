@@ -1,23 +1,25 @@
-# Snake Game for the beginners to understand the python langauge
-# Created by @NewBeginner2701
+# Simple Snake Game with Level
+# By @NewBeginners2701
+
 import turtle
 import time
 import random
 
 delay = 0.1
+level = 1
 
-# Score 
+# Score
 score = 0
 high_score = 0
 
-#Set up the screen
+# Set up the screen
 wn = turtle.Screen()
-wn.title("Snake Game by Rutvik")
+wn.title("Snake Game with Levels by @Rutvik")
 wn.bgcolor("green")
-wn.setup(width=600, height= 600)
-wn.tracer(0) # This turn off screen updates
+wn.setup(width=600 , height=600)
+wn.tracer(0) # Turns off the screen updates
 
-#Snake Head
+# Snake head
 head = turtle.Turtle()
 head.speed(0)
 head.shape("square")
@@ -26,7 +28,7 @@ head.penup()
 head.goto(0,0)
 head.direction = "stop"
 
-# Snake Food
+# Snake food
 food = turtle.Turtle()
 food.speed(0)
 food.shape("circle")
@@ -36,7 +38,7 @@ food.goto(0,100)
 
 segments = []
 
-# Pen 
+# Pen
 pen = turtle.Turtle()
 pen.speed(0)
 pen.shape("square")
@@ -44,10 +46,9 @@ pen.color("white")
 pen.penup()
 pen.hideturtle()
 pen.goto(0,260)
-pen.write("Score: 0 High Score: 0 " , align="center", font=("Courier", 24, "normal"))
+pen.write("Score: 0 High Score: 0 Level: 1", align="center", font=("Courier", 16, "normal"))
 
 # Functions
-
 def go_up():
     if head.direction != "down":
         head.direction = "up"
@@ -61,41 +62,38 @@ def go_left():
         head.direction = "left"
 
 def go_right():
-   if head.direction != "left":
+    if head.direction != "left":
         head.direction = "right"
-
 
 def move():
     if head.direction == "up":
         y = head.ycor()
         head.sety(y + 20)
-
+    
     if head.direction == "down":
         y = head.ycor()
         head.sety(y - 20)
-
+    
     if head.direction == "left":
         x = head.xcor()
         head.setx(x - 20)
-
+    
     if head.direction == "right":
         x = head.xcor()
         head.setx(x + 20)
 
-# Keyboard bindings
+# Keyword bindings
 wn.listen()
 wn.onkeypress(go_up, "w")
 wn.onkeypress(go_down, "s")
 wn.onkeypress(go_left, "a")
 wn.onkeypress(go_right, "d")
 
-
-# Main Game loops
+# Main game loop
 while True:
     wn.update()
 
     # Check for a collision with the border
-
     if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
         time.sleep(1)
         head.goto(0,0)
@@ -108,22 +106,26 @@ while True:
         # Clear the segments list
         segments.clear()
 
-        # Reset the score
+        # Rest the score
         score = 0
 
         # Rest the delay
         delay = 0.1
 
+        # Rest the level
+        level = 1
+
+        # Update the score display
         pen.clear()
-        pen.write("Score: {} High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal"))
+        pen.write("Score: {} High Score: {} Level: {}".format(score, high_score, level), align="center", font=("Courier", 16, "normal"))
 
 
     # Check for a collision with the food
     if head.distance(food) < 20:
-        
-        # Move the food to random part of screen
-        x = random.randint(-290, 290)
-        y = random.randint(-290, 290)
+
+        # Move the food to a random spot
+        x = random.randint(-290,290)
+        y = random.randint(-290,290)
         food.goto(x,y)
 
         # Add a segment
@@ -137,22 +139,22 @@ while True:
         # Shorten the delay
         delay -= 0.001
 
-        # Increase the score 
-        score += 1
+        # Increase the score
+        score += 10
 
         if score > high_score:
             high_score = score
-            
+        
         pen.clear()
-        pen.write("Score: {} High Score: {}".format(score, high_score), align="center", font=("Courier",24,"normal"))
-    
+        pen.write("Score: {} High Score: {} Level: {}".format(score, high_score, level), align="center", font=("Courier", 16, "normal"))
+
     # Move the end segments first in reverse order
-    for index in range(len(segments)-1, 0 , -1):
+    for index in range(len(segments)-1, 0, -1):
         x = segments[index-1].xcor()
         y = segments[index-1].ycor()
-        segments[index].goto(x, y)
-
-    # Move segment 0 to where the head is 
+        segments[index].goto(x,y)
+    
+    # Move segment 0 to where the head is
     if len(segments) > 0:
         x = head.xcor()
         y = head.ycor()
@@ -174,16 +176,34 @@ while True:
             # Clear the segments list
             segments.clear()
 
-            # Reset the score
+            # Rest the score
             score = 0
 
             # Rest the delay
             delay = 0.1
 
+            # Rest the level 
+            level = 1
+
             # Update the score display
             pen.clear()
-            pen.write("Score: {} High Score: {}".format(score, high_score), align="center", font=("Courier",24,"normal"))
-            
+            pen.write("Score: {} High Score: {} Level: {}".format(score, high_score, level), align="center", font=("Courier", 16, "normal"))
+
+    # Levels
+    if level == 1 and score == 50:
+        level += 1
+        delay *= 0.9
+    
+    if level == 2 and score == 100:
+        level += 1
+        delay *= 0.9
+    
+    if level == 1 and score == 50:
+        level += 1
+        delay *= 0.9
+
+    
+
     time.sleep(delay)
 
 wn.mainloop()
