@@ -1,4 +1,5 @@
 # Snake Game for the beginners to understand the python langauge
+# Created by @NewBeginner2701
 import turtle
 import time
 import random
@@ -137,7 +138,7 @@ while True:
         delay -= 0.001
 
         # Increase the score 
-        score += 10
+        score += 1
 
         if score > high_score:
             high_score = score
