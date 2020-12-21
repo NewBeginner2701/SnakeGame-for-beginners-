@@ -1,5 +1,5 @@
 # Simple Snake Game with Level
-# By @NewBeginners2701
+# By @NewBeginner2701
 
 import turtle
 import time
